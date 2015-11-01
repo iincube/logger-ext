@@ -1,7 +1,7 @@
 Mongo Logger Library:
 =====================
 
-Logging library for nodejs. API is extensible to inject dynamic behavior.
+Logging library inspired from [Timber](https://github.com/JakeWharton/timber) for nodejs. API is extensible to inject dynamic behavior.
 
 Still work in progress.
 
