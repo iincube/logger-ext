@@ -21,28 +21,24 @@ var loglevel = require('./loglevel');
 var logger = {};
 
 /**
+ * Should use this to plant dynamic logwriter.
+ * @param  {LogWriter} writer to be used as transaction layer for log messages
+ */
+logger.plant = function(writer) {
+  if (this.writers === undefined) {
+    this.writers = [];
+  }
+  this.writers.push(writer);
+  writer.onPlant();
+};
+
+/**
  * log level info
  * @param  {string} tag     type to filter messages in mongo (char limit 20)
  * @param  {string} message actual log message in form of string.
  */
 logger.i = function(tag, message) {
-  this.__write__(loglevel.info, tag, message);
-};
-
-logger.__addWriter__ = function(writer) {
-  if (this._writer_ === undefined) {
-    this._writer_ = [];
-  }
-  this._writer_.push(writer);
-  writer.onPlant();
-};
-
-/**
- * Should use this to plant dynamic logwriter.
- * @param  {LogWriter} writer to be used as transaction layer for log messages
- */
-logger.plant = function(writer) {
-  this.__addWriter__(writer);
+  this.write(loglevel.info, tag, message);
 };
 
 /**
@@ -51,7 +47,7 @@ logger.plant = function(writer) {
  * @param  {string} message actual log message in form of string.
  */
 logger.w = function(tag, message) {
-  this.__write__(loglevel.warn, tag, message);
+  this.write(loglevel.warn, tag, message);
 };
 
 /**
@@ -60,7 +56,7 @@ logger.w = function(tag, message) {
  * @param  {string} message actual log message in form of string.
  */
 logger.e = function(tag, message) {
-  this.__write__(loglevel.error, tag, message);
+  this.write(loglevel.error, tag, message);
 };
 
 /**
@@ -69,12 +65,11 @@ logger.e = function(tag, message) {
  * @param  {string} message actual log message in form of string.
  */
 logger.t = function(tag, message) {
-  this.__write__(loglevel.trace, tag, message);
+  this.write(loglevel.trace, tag, message);
 };
 
-
-logger.__write__ = function(level, tag, message) {
-  this._writer_.forEach(function(writer) {
+logger.write = function(level, tag, message) {
+  this.writers.forEach(function(writer) {
     try {
       writer.write(level, tag, message);
     } catch (err) {
