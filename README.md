@@ -1,23 +1,25 @@
-# mongo-logger
-## Mongo Logger Library:
+Mongo Logger Library:
+=====================
 
-This is a logging library used for logging directly into a collection in mongodb.
+Logging library for nodejs. API is extensible to inject dynamic behavior.
 
-### How to use:
+Still work in progress.
 
-1. Change the params(**_mongourl** and **_collectionname**) in [src/mongowriter.js](https://github.com/sridhar-sivaraman/mongo-logger/blob/master/src/mongowriter.js) to point to your mongourl and collection name.
-2. Initialize the logger.
-3. Initialize the mongowriter.
-4. Open mongodb connection for mongowriter.
-5. Plant the writer object to the logger (this will throw an error if connection is not established).
-6. Use the logger instance for logging.
-7. Close the created mongodb connection.
+**Usage:** Refer [this sample](https://github.com/iincube/mongo-logger/blob/master/src/sample.js)
 
-### Supported methods:
-   * i(tag, message) - used for info logging
-   * w(tag, message) - used for warning logging
-   * e(tag, message) - used for error logging
-   * t(tag, message) - used for trace logging
+License
+-------
 
+    Copyright 2015 MTap Technologies
 
-**Note:** The [src/sample.js](https://github.com/sridhar-sivaraman/mongo-logger/blob/master/src/sample.js) has an example of how to initialize and use the logger.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
