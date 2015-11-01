@@ -49,7 +49,7 @@ LogWriter.prototype.write = function(level, tag, message) {
 };
 
 LogWriter.prototype.onPlant = function() {
-  throw new Error('Not Implemented by LogWriter');
+  console.info('LogWriter planted');
 };
 
 module.exports = LogWriter;

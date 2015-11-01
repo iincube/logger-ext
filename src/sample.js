@@ -19,14 +19,17 @@
 // sample consumer for logger
 var logger = require('./logger');
 var MongoWriter = require('./mongowriter');
+var DefaultWriter = require('./logwriter');
 
 // Initialize mongo logger
 var mongologger = new MongoWriter();
+var defaultWriter = new DefaultWriter();
 // this differs if browser or node.
 // Open mongo connection
 mongologger.open();
 // Plant to logger
-logger.plant(mongologger);
+// logger.plant(mongologger);
+logger.plant(defaultWriter);
 // Insert the log messages
 logger.i('info-tag', 'This is a info message');
 logger.w('warn-tag', 'This is a warn message');

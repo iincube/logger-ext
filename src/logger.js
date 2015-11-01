@@ -29,20 +29,20 @@ logger.i = function(tag, message) {
   this.__write__(loglevel.info, tag, message);
 };
 
+logger.__addWriter__ = function(writer) {
+  if (this._writer_ === undefined) {
+    this._writer_ = [];
+  }
+  this._writer_.push(writer);
+  writer.onPlant();
+};
+
 /**
  * Should use this to plant dynamic logwriter.
  * @param  {LogWriter} writer to be used as transaction layer for log messages
  */
 logger.plant = function(writer) {
-  // Note : do not remove plant give access to the caller to define logwriter.
-  // todo : in future the logger api will accept more than one logwriter.
-  try {
-    writer.onPlant();
-  } catch (err) {
-    // fail silently but warn the user.
-    return;
-  }
-  this._writer_ = writer;
+  this.__addWriter__(writer);
 };
 
 /**
@@ -74,11 +74,13 @@ logger.t = function(tag, message) {
 
 
 logger.__write__ = function(level, tag, message) {
-  try {
-    this._writer_.write(level, tag, message);
-  } catch (err) {
-    // fail silently incase of writer exception. should use common available console printing
-  }
+  this._writer_.forEach(function(writer) {
+    try {
+      writer.write(level, tag, message);
+    } catch (err) {
+      // fail silently incase of writer exception. should use common available console printing
+    }
+  });
 };
 
 module.exports = logger;
