@@ -1,8 +1,8 @@
 {
-  "name": "mongo-logger",
-  "description": "Oru logger library",
+  "name": "logger-ext",
+  "description": "Logger to push logs to mongo db",
   "version": "0.0.1",
-  "author": "Sridhar",
+  "author": "mtap js team",
   "dependencies": {
     "mongoskin": "^2.0.3"
   },
